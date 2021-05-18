@@ -1,0 +1,110 @@
+---
+title: "Day One"
+author: "[Andrew Stewart](https://ajstewartlang.netlify.app/)"
+date: "July 2021"
+output: 
+  html_document:
+    theme: flatly
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(message = FALSE)
+```
+
+# Your First R Script
+
+The first thing we're going to do is to run a script that will generate some data visualisations based on an open dataset of UFO observations. The dataset is part of Tidy Tuesday data wrangling/visualisation set of challenges. The script below contains code that wranlges and visualises the data. Don't worry at this stage what each line does as we'll be exploring it in more detail later. At this point, I just want you all to run a script to check your installation of R is working as it should. And I thought it might as well be a fun script!
+
+The first two lines below load the packages we are going to use. The `tidyverse` package contains a number of individual packages that all play nicely together. They are based on the idea of tidy data and functions that operate on the data in a human-readable manner. The symbol `%>%` is the pipe operator and can be read as "and then".  The `patchwork` package is a package that allows us to combine data visualisations in an aesthetically pleasing way.
+
+```{r}
+library(tidyverse) # load the tidyverse
+library(patchwork) # needed to combine our 4 plots at the end
+```
+
+Now we are going to read in the data. Note that we are doing this using the `read_csv()` function but than than reading in the data locally (i.e., from somewhere on our own computer), we are loading it from a website. The data is in `.csv.` format which is a common format for rectangular datasets (i.e., datasets with rows and columns). The line at the start `# read in data` is a comment - as indicated by the `#` and won't be interpreted as an R command. Comments are useful not just for others but for your future self. It's a good idea to get into the habit of adding comments to your code - your future self will be thankful!
+
+```{r}
+# read in data 
+ufo_sightings <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-06-25/ufo_sightings.csv")
+```
+
+Next we're going to create our first plot.
+
+```{r}
+# plot of top 10 US states with number of sightings in each state
+plot1 <- ufo_sightings %>%
+  filter(!is.na(state)) %>%
+  mutate(state = str_to_upper(state)) %>%
+  group_by(state) %>%
+  tally() %>%
+  top_n(10) %>%
+  ggplot(aes(x = reorder(state, n), y = n, fill = state)) +
+  geom_col() + 
+  coord_flip() +
+  guides(fill = FALSE) + 
+  labs(title = "Top 10 States for UFO Sightings",
+       x = NULL, 
+       y = NULL) +
+  ylim(0, 11000) +
+  theme_minimal() +
+  theme(text = element_text(size = 15))
+
+plot1
+```
+
+
+```{r}
+
+# work out the top 10 states with most UFO sightings
+top_states <- ufo_sightings %>%
+  filter(!is.na(state)) %>%
+  group_by(state) %>%
+  tally() %>%
+  top_n(10) %>% 
+  pull(state)
+
+# work out states within lat and long limits (i.e., exclude Alaska)
+tidied_ufo <- ufo_sightings %>%
+  filter(country == "us") %>%
+  filter(latitude > 24 & latitude < 50)
+
+# plot all sightings on a map of the US, with 10 top states coloured
+plot2 <- tidied_ufo %>%
+  ggplot(aes(x = longitude, y = latitude)) + 
+  geom_point(size = .5, alpha = .25) +
+  theme_void() +
+  coord_cartesian() +
+  labs(title = "Sites of UFO Sightings in the US") +
+  guides(colour = FALSE) +
+  guides(fill = FALSE) +
+  theme(text = element_text(size = 15))
+
+# plot of top 10 UFO shapes spotted in California
+plot3 <- tidied_ufo %>%
+  filter(state == "ca") %>%
+  filter(ufo_shape != "other") %>%
+  filter(ufo_shape != "unknown") %>%
+  group_by(ufo_shape) %>%
+  tally() %>%
+  top_n(10) %>%
+  mutate(ufo_shape = str_to_title(ufo_shape)) %>%
+  ggplot(aes(x = reorder(ufo_shape, n), y = n, fill = ufo_shape)) +
+  geom_col() + 
+  coord_flip() +
+  guides(fill = FALSE) + 
+  labs(title = "Top 10 UFO Shapes spotted in California",
+       x = NULL, 
+       y = NULL) +
+  theme_minimal() +
+  theme(text = element_text(size = 15))
+
+# Put plots together
+my_plot <- (plot1 + plot3) / (plot2)
+
+ggsave("ufo_plot.jpg", plot = my_plot, width = 12, height = 10)
+```
+

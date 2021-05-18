@@ -26,7 +26,7 @@ library(patchwork) # needed to combine our 4 plots at the end
 ```
 
 Now we are going to read in the data. Note that we are doing this using the `read_csv()` function but than than reading in the data locally (i.e., from somewhere on our own computer), we are loading it from a website. The data is in `.csv.` format which is a common format for rectangular datasets (i.e., datasets with rows and columns). The line at the start `# read in data` is a comment - as indicated by the `#` and won't be interpreted as an R command. Comments are useful not just for others but for your future self. It's a good idea to get into the habit of adding comments to your code - your future self will be thankful!
-
+ 
 ```{r}
 # read in data 
 ufo_sightings <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-06-25/ufo_sightings.csv")

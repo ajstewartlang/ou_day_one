@@ -1,7 +1,7 @@
 ---
 title: "Day One"
 author: "[Andrew Stewart](https://ajstewartlang.netlify.app/)"
-date: "July 2021"
+date: "9th July 2021"
 output: 
   html_document:
     theme: flatly
@@ -20,7 +20,7 @@ The first thing we're going to do is to run a script that will generate some dat
 
 We will create three visualisations of UFO sightings in the US using a database of more than 80,000 UFO sightings over the years.
 
-The first two lines below load the packages we are going to use. The `tidyverse` package contains a number of individual packages that all play nicely together. They are based on the idea of tidy data and functions that operate on the data in a human-readable manner. 
+The first two lines below load the packages we are going to use. The `{tidyverse}` package contains a number of individual packages that all play nicely together. They are based on the idea of tidy data and functions that operate on the data in a human-readable manner. 
 
 ```{r}
 library(tidyverse) 
@@ -74,10 +74,10 @@ top_states
 We're now going to do a little wrangling to ensure we select the 48 contiguous states (sorry Alaska and Hawaii). I'm mapping this list of 48 states onto a new variable called `tidied_ufo`.
 
 ```{r}
-# work out states within lat and long limits (i.e., exclude Alaska)
+# work out states within lat and long limits (i.e., exclude Alaska and Hawaii)
 tidied_ufo <- ufo_sightings %>%
   filter(country == "us") %>%
-  filter(latitude > 24 & latitude < 50)
+  filter(state != "ak" & state != "hi")
 ```
 
 Now we're ready for our second plot where we're plotting the sightings using their latitude and longitude co-ordinates. There are so many we have a pretty decent approximation of the contiguous US.

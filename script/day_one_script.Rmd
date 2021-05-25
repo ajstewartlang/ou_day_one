@@ -1,7 +1,7 @@
 ---
 title: "Day One"
 author: "[Andrew Stewart](https://ajstewartlang.netlify.app/)"
-date: "9th July 2021"
+date: "8th July 2021"
 output: 
   html_document:
     theme: flatly

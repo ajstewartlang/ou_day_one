@@ -20,6 +20,8 @@ The first thing we're going to do is to run a script that will generate some dat
 
 We will create three visualisations of UFO sightings in the US using a database of more than 80,000 UFO sightings over the years.
 
+Note, the entire script can be grabbed from here: https://raw.githubusercontent.com/ajstewartlang/ou_day_one/main/script/ufo_script.R
+
 The first two lines below load the packages we are going to use. The `{tidyverse}` package contains a number of individual packages that all play nicely together. They are based on the idea of tidy data and functions that operate on the data in a human-readable manner. 
 
 ```{r}

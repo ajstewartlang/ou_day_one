@@ -16,7 +16,7 @@ knitr::opts_chunk$set(message = FALSE)
 
 # Your First R Script
 
-The first thing we're going to do is to run a script that will generate some data visualisations based on an open dataset of UFO observations. The dataset is part of Tidy Tuesday data wrangling/visualisation set of challenges. The script below contains code that wranlges and visualises the data. Don't worry at this stage what each line does as we'll be exploring it in more detail later. At this point, I just want you all to run a script to check your installation of R is working as it should. And I thought it might as well be a fun script!
+The first thing we're going to do is to run a script that will generate some data visualisations based on an open dataset of UFO observations. The dataset is part of Tidy Tuesday data wrangling/visualisation set of challenges. The script below contains code that wrangles and visualises the data. Don't worry at this stage what each line does as we'll be exploring it in more detail later. At this point, I just want you all to run a script to check your installation of R is working as it should. And I thought it might as well be a fun script!
 
 We will create three visualisations of UFO sightings in the US using a database of more than 80,000 UFO sightings over the years.
 

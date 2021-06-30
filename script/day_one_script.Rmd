@@ -48,7 +48,7 @@ plot1 <- ufo_sightings %>%
   ggplot(aes(x = reorder(state, n), y = n, fill = state)) +
   geom_col() + 
   coord_flip() +
-  guides(fill = FALSE) + 
+  guides(fill = 'none') + 
   labs(title = "Top 10 States for UFO Sightings",
        x = NULL, 
        y = NULL) +
@@ -57,20 +57,6 @@ plot1 <- ufo_sightings %>%
   theme(text = element_text(size = 15))
 
 plot1
-```
-
-The next chunk of code involves some data wrangling to figure out the top 10 states for UFO sightings and save those names to a variable we're calling `top_states`. If you then type the variable name `top_states` you'll see the abbreviations of those 10 state names printed out.
-
-```{r}
-# work out the top 10 states with most UFO sightings
-top_states <- ufo_sightings %>%
-  filter(!is.na(state)) %>%
-  group_by(state) %>%
-  tally() %>%
-  top_n(10) %>% 
-  pull(state)
-
-top_states
 ```
 
 We're now going to do a little wrangling to ensure we select the 48 contiguous states (sorry Alaska and Hawaii). I'm mapping this list of 48 states onto a new variable called `tidied_ufo`.
@@ -92,8 +78,8 @@ plot2 <- tidied_ufo %>%
   theme_void() +
   coord_cartesian() +
   labs(title = "Sites of UFO Sightings in the US") +
-  guides(colour = FALSE) +
-  guides(fill = FALSE) +
+  guides(colour = 'none') +
+  guides(fill = 'none') +
   theme(text = element_text(size = 15))
  
 plot2
@@ -114,7 +100,7 @@ plot3 <- tidied_ufo %>%
   ggplot(aes(x = reorder(ufo_shape, n), y = n, fill = ufo_shape)) +
   geom_col() + 
   coord_flip() +
-  guides(fill = FALSE) + 
+  guides(fill = 'none') + 
   labs(title = "California Top 10 UFO Shapes",
        x = NULL, 
        y = NULL) +
